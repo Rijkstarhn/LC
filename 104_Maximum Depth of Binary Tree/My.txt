@@ -1,0 +1,22 @@
+class Solution {
+    
+    private int depth;
+    
+    public int maxDepth(TreeNode root) {
+        if (root == null) return 0;
+        int depth = 0;
+        maxDepth(root, depth);
+        return this.depth;
+    }
+    
+    private int maxDepth(TreeNode root, int depth) {
+        if (root == null) {
+            if (depth > this.depth) this.depth = depth;
+            return 0;
+        }
+        depth++;
+        maxDepth(root.left, depth);
+        maxDepth(root.right, depth);
+        return 0;
+    }
+}
