@@ -1,0 +1,21 @@
+class Solution {
+    public String convert(String s, int numRows) {
+        if (numRows == 1) return s;
+        ArrayList<Character>[] output = (ArrayList<Character>[])new ArrayList[numRows];
+        for (int i = 0; i < numRows; i++) {
+            output[i] = new ArrayList<Character>();
+        }
+        StringBuilder out = new StringBuilder();
+        for (int i = 0; i < s.length(); i++){
+            int pos = i % (2*numRows-2);
+            if (pos < numRows) output[pos].add(s.charAt(i));
+            else output[2*numRows-2-pos].add(s.charAt(i));
+        }
+        for (int i = 0; i < output.length; i++) {
+            for (char c : output[i]) {
+                out.append(c);
+            }
+        }
+        return out.toString();
+    }
+}
