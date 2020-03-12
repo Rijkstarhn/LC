@@ -1,0 +1,27 @@
+class Solution {
+    private int maxArea;
+    public int maxArea(int[] height) {
+        int i = 0, j = height.length-1;
+        maxArea = compareArea(height, i, j);
+        while(i < j) {
+            if (height[j] < height[i]){
+                int right = height[j];
+                while(i < j && right >= height[--j]);
+                maxArea = compareArea(height, i, j);
+            }
+            else {
+                int left = height[i];
+                while(i < j && left >= height[++i]);
+                maxArea = compareArea(height, i, j);
+            }
+        }
+        return maxArea;
+    }
+    
+    private int compareArea(int[] height, int i, int j){
+        int area = Math.min(height[i], height[j]) * (j-i);
+        maxArea = Math.max(maxArea, area);
+        return maxArea;
+    }
+    
+}
