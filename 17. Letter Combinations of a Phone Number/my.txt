@@ -1,0 +1,19 @@
+class Solution {
+    private static final String[] board = { "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+    public List<String> letterCombinations(String digits) {
+        List<String> ans = new ArrayList<String>();
+        if (digits.length() == 0) return ans;
+        ans.add("");
+        for (int j = 0; j < digits.length(); j++){
+            int len = ans.size();
+            for (int i = 0; i < len; i++){
+                for (int k = 0; k < board[digits.charAt(j)-'0'].length(); k++){
+                    String s1 = ans.get(0) + board[digits.charAt(j)-'0'].substring(k, k+1);
+                    ans.add(s1);
+                }
+                ans.remove(0);
+            }
+        }
+        return ans;
+    }
+}
