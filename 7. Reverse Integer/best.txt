@@ -1,0 +1,13 @@
+class Solution {
+    public int reverse(int x) {
+        int ans = 0;
+        while (x != 0){
+            int end = x % 10;
+            int transit = end + ans * 10;
+            if ((transit-end) / 10 != ans) return 0;
+            x /= 10;
+            ans = transit;
+        }
+        return ans;
+    }
+}
