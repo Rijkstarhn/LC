@@ -1,0 +1,15 @@
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ArrayList<ListNode> ptrs = new ArrayList<ListNode>();
+        int count = 0;
+        while(head != null){
+            ptrs.add(head);
+            head = head.next;
+            count++;
+        }
+        if (count <= n) return ptrs.get(0).next;
+        if (count > n && n > 1) ptrs.get(count-n-1).next = ptrs.get(count-n+1);
+        if (n == 1) ptrs.get(ptrs.size()-2).next = null;
+        return ptrs.get(0);
+    }
+}
