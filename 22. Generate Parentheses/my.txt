@@ -1,0 +1,20 @@
+class Solution {
+    private ArrayList<String> ans = new ArrayList<String>();
+    public List<String> generateParenthesis(int n) {
+        if (n == 0) {
+            ans.add("");
+            return ans;
+        }
+        createP("(", n-1, n);
+        return ans;
+    }
+    private void createP(String solution, int leftNum, int rightNum){
+        if (leftNum == 0 && rightNum == 0) {
+            ans.add(solution);
+            return;
+        }
+        if (leftNum > rightNum) return;
+        if (leftNum > 0) createP(solution+"(", leftNum-1, rightNum);
+        if (rightNum > 0) createP(solution+")", leftNum, rightNum-1);
+    }
+}
