@@ -1,0 +1,33 @@
+class Solution {
+    public int search(int[] nums, int target) {
+        if (0 == nums.length) return -1;
+        int lo = 0, hi = nums.length-1;
+        while (hi-lo > 1){
+            int mid = (lo+hi)/2;
+            if (nums[mid] > nums[hi]) lo = mid;
+            else hi = mid;
+        }
+        int realMid = nums[lo] < nums[hi]? lo : hi;
+        if (nums[nums.length-1] < target) {
+            lo = 0;
+            hi = realMid;
+        }
+        else if (nums[nums.length-1] > target) {
+            lo = realMid;
+            hi = nums.length-1;
+        }
+        else return nums.length-1;
+        return search(nums, target, lo, hi);
+    }
+    private int search(int[] nums, int target, int lo, int hi){
+        if (hi - lo <= 1) {
+            if (nums[hi] == target) return hi;
+            if (nums[lo] == target) return lo;
+            else return -1;
+        }
+        int ans;
+        if (nums[(lo+hi)/2] > target) ans = search(nums, target, lo, (lo+hi)/2);
+        else ans = search(nums, target, (lo+hi)/2, hi);
+        return ans;
+    }
+}
