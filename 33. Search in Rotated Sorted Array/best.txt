@@ -1,0 +1,24 @@
+class Solution {
+    public int search(int[] nums, int target) {
+        if (0 == nums.length) return -1;
+        int lo = 0, hi = nums.length-1;
+         Find the realMid with binary search
+        while (lo  hi){
+            int mid = (lo+hi)2;
+            if (nums[mid]  nums[hi]) lo = mid+1;
+            else hi = mid;
+        }
+        int realMid = lo;
+         Set the start condition with the realMid
+        lo = nums[nums.length-1]  target 0  realMid;
+        hi = nums[nums.length-1] = target nums.length-1  realMid;
+         Find the answer with binary search
+        while (lo = hi){
+            int mid = (lo+hi)2;
+            if (target  nums[mid]) hi = mid-1;
+            else if (target  nums[mid]) lo = mid+1;
+            else return mid;
+        }
+        return -1;
+    }
+}
