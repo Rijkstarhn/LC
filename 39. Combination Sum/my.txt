@@ -1,0 +1,18 @@
+class Solution {
+    private ArrayList<List<Integer>> answer = new ArrayList<List<Integer>>();
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        findCombination(candidates, 0, target, new ArrayList<Integer>());
+        return answer;
+    }
+    private void findCombination(int[] candidates, int index, int rest, ArrayList combination){
+        if (rest == 0) answer.add(new ArrayList<Integer>(combination));
+        if (candidates[index] > rest) return;
+        for (int i = index; i < candidates.length; i++){
+            if (candidates[index] > rest) break;
+            combination.add(candidates[i]);
+            findCombination(candidates, i, rest-candidates[i], combination);
+            combination.remove(combination.size()-1);
+        }
+    }
+}
