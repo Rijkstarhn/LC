@@ -1,0 +1,20 @@
+class Solution {
+    private ArrayList<List<Integer>> answer = new ArrayList<List<Integer>>();
+    public List<List<Integer>> permute(int[] nums) {
+        ArrayList<Integer> solution = new ArrayList<Integer>();
+        subPermute(nums, solution);
+        return answer;
+    }
+    private void subPermute(int[] nums, ArrayList<Integer> solution) {
+        if (solution.size() == nums.length) {
+            answer.add(new ArrayList<>(solution));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++){
+            if (solution.contains(nums[i])) continue;
+            solution.add(nums[i]);
+            subPermute(nums, solution);
+            solution.remove(solution.size()-1); 
+        }
+    }
+}
