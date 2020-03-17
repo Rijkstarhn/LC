@@ -1,0 +1,25 @@
+class Solution {
+    public int maxSubArray(int[] nums) {
+        if (nums.length == 0) return 0;
+        return findSubMax(nums, 0, nums.length-1);
+    }
+    private int findSubMax(int[] nums, int left, int right){
+        if (left == right) return nums[left];
+        int mid = left + (right-left)/2;
+        int leftSubMax = findSubMax(nums, left, mid);
+        int rightSubMax = findSubMax(nums, mid+1, right);
+        int temp = 0;
+        int leftSideMax = nums[mid];
+        for (int i = mid; i >= left; i--){
+            temp += nums[i];
+            leftSideMax = Math.max(leftSideMax, temp);
+        }
+        temp = 0;
+        int rightSideMax = nums[mid+1];
+        for (int i = mid+1; i <= right; i++){
+            temp += nums[i];
+            rightSideMax = Math.max(rightSideMax, temp);
+        }
+        return Math.max(Math.max(leftSubMax, rightSubMax), leftSideMax+rightSideMax);
+    }
+}
