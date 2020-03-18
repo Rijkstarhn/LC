@@ -1,0 +1,25 @@
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        if (intervals.length == 0) return intervals;
+        // sort the intervals with first number of interval
+        Arrays.sort(intervals, (i1, i2) -> Integer.compare(i1[0], i2[0]));
+        // Merge overlaps
+        boolean[] merged = new boolean[intervals.length];
+        int i = 0, count = 0;
+        while (i != intervals.length-1){
+            if (intervals[i][1] >= intervals[i+1][0]){
+                intervals[i+1] = new int[]{Math.min(intervals[i][0], intervals[i+1][0]), Math.max(intervals[i][1], intervals[i+1][1])};
+                merged[i] = true;
+                count++;
+            }
+            i++;
+        }
+        // recreate a int[][] for storing the answer
+        int[][] ans = new int[intervals.length-count][];
+        int index = 0;
+        for (int j = 0; j < intervals.length; j++){
+            if (!merged[j]) ans[index++] = intervals[j];
+        }
+        return ans;
+    }
+}
