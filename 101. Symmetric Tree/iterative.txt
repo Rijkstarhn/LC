@@ -1,0 +1,25 @@
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return true;
+        TreeNode[] initial = {root};
+        boolean notAllNull = true;
+        while (notAllNull){
+            notAllNull = !notAllNull;
+            int size = initial.length;
+            TreeNode[] pre = new TreeNode[size*2];
+            for (int i = 0; i < size; i++){
+                if ((i < size/2) && !sameTo(initial[i], initial[size-1-i])) return false;
+                if (initial[i] != null && (initial[i].left != null || initial[i].right != null)) notAllNull = true;
+                pre[2*i] = initial[i] == null? null : initial[i].left;
+                pre[2*i+1] = initial[i] == null? null : initial[i].right;
+            }
+            initial = pre;
+        }
+        return true;
+    }
+    private boolean sameTo(TreeNode lPart, TreeNode rPart){
+        if (lPart == null && rPart == null) return true;
+        if (lPart != null && rPart != null && lPart.val == rPart.val) return true;
+        return false;
+    }
+}
