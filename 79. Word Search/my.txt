@@ -1,0 +1,21 @@
+class Solution {
+    private int m, n;
+    public boolean exist(char[][] board, String word) {
+        m = board.length; n = board[0].length;
+        boolean[][] marked = new boolean[m][n]; 
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++){
+                if (findExist(board, i, j, 0, word, marked)) return true;
+            }
+        }
+        return false;
+    }
+    private boolean findExist(char[][] board, int i, int j, int k, String word, boolean[][] marked){
+        if (k == word.length()) return true;
+        if (j < 0 || j >= n || i < 0 || i >= m || marked[i][j] || (board[i][j] != word.charAt(k))) return false;
+        marked[i][j] = true;
+        if (findExist(board, i, j-1, k+1, word, marked) || findExist(board, i, j+1, k+1, word, marked) || findExist(board, i-1, j, k+1, word, marked) || findExist(board, i+1, j, k+1, word, marked)) return true;
+        marked[i][j] = false;
+        return false;
+    }
+}
