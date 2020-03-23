@@ -1,0 +1,10 @@
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return isValid(root, null, null);
+    }
+    private boolean isValid(TreeNode node, Integer lowBound, Integer upBound){
+        if (node == null) return true;
+        if (lowBound != null && node.val <= lowBound || upBound != null && node.val >= upBound) return false;
+        return isValid(node.left, lowBound, node.val) && isValid(node.right, node.val, upBound);
+    }
+}
