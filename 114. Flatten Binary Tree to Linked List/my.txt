@@ -1,0 +1,18 @@
+class Solution {
+    public void flatten(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        flatten(root, queue);
+        TreeNode node = queue.poll();
+        while (!queue.isEmpty()){
+            node.right = queue.poll();
+            node.left = null;
+            node = node.right;
+        }
+    }
+    private void flatten(TreeNode root, Queue<TreeNode> queue){
+        if (root == null) return;
+        queue.offer(root);
+        flatten(root.left, queue);
+        flatten(root.right, queue);
+    }
+}
