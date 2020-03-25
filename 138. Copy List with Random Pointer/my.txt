@@ -1,0 +1,26 @@
+class Solution {
+    public Node copyRandomList(Node head) {
+        if (head == null) return null;
+        Node oldHead = head;
+        Node copyHead = new Node(head.val), prev = copyHead, next = copyHead;
+        HashMap<Node, Node> randomIndex = new HashMap<>();
+        randomIndex.put(head, copyHead);
+        head = head.next;
+        //Iterate through the node list to create new link and get the relationship with old node and new node
+        while(head != null){
+            next = new Node(head.val);
+            randomIndex.put(head, next);
+            prev.next = next;
+            prev = prev.next;
+            head = head.next;
+        }
+        head = oldHead; next = copyHead;
+        //Iterate through again to create the random ptrs in the new linked list
+        while(head != null){
+            next.random = randomIndex.get(head.random);
+            head = head.next;
+            next = next.next;
+        }
+        return copyHead;
+    }
+}
