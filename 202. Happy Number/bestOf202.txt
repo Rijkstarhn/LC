@@ -1,0 +1,19 @@
+class Solution {
+    public boolean isHappy(int n) {
+        Set<Integer> inLoop = new HashSet<Integer>();
+        while (inLoop.add(n)){
+            n = cal(n);
+            if (n == 1) return true;
+        }
+        return false;
+    }
+    private int cal(int n){
+        int sum = 0, digit = 0;
+        while (n != 0){
+            digit = n%10;
+            sum += digit * digit;
+            n /= 10;
+        }
+        return sum;
+    }
+}
