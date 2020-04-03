@@ -1,0 +1,28 @@
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null) return null;
+        ListNode ans = new ListNode(0), pre = ans;
+        ans.next = head;
+        int preVal = Integer.MAX_VALUE;
+        while (head != null && head.next != null){
+            if (head.next.val == head.val) {
+                preVal = head.val;
+                pre.next = head.next.next;
+                head = pre.next;
+            }
+            else {
+                if (head.val == preVal) {
+                    pre.next = head.next;
+                    head = head.next;
+                }
+                else {
+                    pre = pre.next;
+                    head = pre.next;
+                }
+            }
+        }
+        // In case there is a single node left
+        if (head != null) pre.next = head.val == preVal? null : head;
+        return ans.next;
+    }
+}
