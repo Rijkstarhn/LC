@@ -1,0 +1,22 @@
+class Solution {
+    public List<Integer> minSubsequence(int[] nums) {
+        int sum = 0;
+        // Stack<Integer> stack = new Stack<>();
+        List<Integer> ans = new ArrayList<>();
+        for (int i : nums){
+            // if (stack.isEmpty() || stack.peek() <= i) stack.push(i);
+            sum += i;
+        }
+        Arrays.sort(nums);
+        int rest = sum;
+        sum = 0;
+        
+        for (int i = nums.length-1; i >= 0; i--){
+            sum += nums[i];
+            rest -= nums[i];
+            ans.add(nums[i]);
+            if (sum > rest) break;
+        }
+        return ans;
+    }
+}
