@@ -1,0 +1,64 @@
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> ans = new ArrayList<>();
+        // Corner Case
+        if (matrix.length == 0) return ans;
+        if (matrix.length == 1) {
+            for (int i : matrix[0])
+                ans.add(i);
+            return ans;
+        }
+        // Set the four limit positions
+        int colDes = 0, colGoal = matrix[0].length-1, rowDes = 0, rowGoal = matrix.length-1;
+        // count and size determine the end of the adding
+        int count = 0, size = matrix.length * matrix[0].length;
+        // set a mark for direction
+        boolean direction = true;
+        // Spiral will either be left->right, then top->bottom or right->left, then bottom->top
+        while (count < size){
+            if (direction){
+            for (int i = colDes; i <= colGoal; i++){
+                ans.add(matrix[rowDes][i]);
+                count++;
+            }
+            rowDes++;
+            if (count == size) return ans;
+            for (int i = rowDes; i <= rowGoal; i++){
+                ans.add(matrix[i][colGoal]);
+                count++;
+            }
+            colGoal--;
+            // Update the four limit positions
+            int temp = colDes;
+            colDes = colGoal;
+            colGoal = temp;
+            temp = rowDes;
+            rowDes = rowGoal;
+            rowGoal = temp;
+            direction = !direction;
+        } //left->right, then top->bottom
+        else {
+            for (int i = colDes; i >= colGoal; i--){
+                ans.add(matrix[rowDes][i]);
+                count++;
+            }
+            rowDes--;
+            if (count == size) return ans;
+            for (int i = rowDes; i >= rowGoal; i--){
+                ans.add(matrix[i][colGoal]);
+                count++;
+            }
+            colGoal++;
+            // Update the four limit positions
+            int temp = colDes;
+            colDes = colGoal;
+            colGoal = temp;
+            temp = rowDes;
+            rowDes = rowGoal;
+            rowGoal = temp;
+            direction = !direction;
+        } // right->left, then bottom->top  
+        }
+        return ans;
+    }
+}
