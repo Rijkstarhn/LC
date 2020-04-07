@@ -1,0 +1,13 @@
+class Solution {
+        public int strStr(String haystack, String needle) {
+        char[] hay = haystack.toCharArray();
+        if (needle.length() == 0) return 0;
+        if (needle.length() > haystack.length()) return -1;
+        char head = needle.charAt(0);
+        int size = needle.length();
+        for (int i = 0; i < hay.length; i++){
+            if (hay[i] == head && i+size <= haystack.length() && haystack.substring(i, i+size).equals(needle)) return i; 
+        }
+        return -1;
+    }
+}
