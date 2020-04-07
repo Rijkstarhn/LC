@@ -1,0 +1,15 @@
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        Queue<Integer> queue = new LinkedList<>();
+        int i = 0, j = 0;
+        while (i < m && j < n){
+            if (nums1[i] <= nums2[j]) queue.offer(nums1[i++]);
+            else queue.offer(nums2[j++]);
+        }
+        if (j < n) while (j < n) queue.offer(nums2[j++]);
+        else while (i < m) queue.offer(nums1[i++]);
+        for (int k = 0; !queue.isEmpty(); k++){
+            nums1[k] = queue.poll();
+        }
+    }
+}
