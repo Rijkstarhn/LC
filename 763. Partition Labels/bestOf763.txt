@@ -1,0 +1,20 @@
+class Solution {
+    public List<Integer> partitionLabels(String S) {
+        List<Integer> ans = new ArrayList<>();
+        int[] map = new int[26];
+        char[] input = S.toCharArray();
+        for (int i = 0; i < input.length; i++){
+            map[input[i]-'a'] = i;
+        }
+        int head = 0, tail = 0;
+        for (int i = 0; i < input.length; i++){
+            tail = Math.max(tail, map[input[i]-'a']);
+            if (i == tail){
+                ans.add(tail-head+1);
+                head = i+1;
+                tail++;
+            }
+        }
+        return ans;
+    }
+}
