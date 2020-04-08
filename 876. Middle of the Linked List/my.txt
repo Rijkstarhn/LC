@@ -1,0 +1,12 @@
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        ListNode[] record = new ListNode[100];
+        int count = 0, i = 0;
+        while(head != null){
+            record[i++] = head;
+            head = head.next;
+            count++;
+        }
+        return record[count/2]; 
+    }
+}
