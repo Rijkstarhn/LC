@@ -1,0 +1,26 @@
+class Solution {
+    public int[][] intervalIntersection(int[][] A, int[][] B) {
+        int lengthA = A.length, lengthB = B.length;
+        int i = 0, j = 0;
+        Queue<Integer> res = new LinkedList<>();
+        
+        while (i < lengthA && j < lengthB){
+            int headA = A[i][0], headB = B[j][0], tailA = A[i][1], tailB = B[j][1];
+            int head = Math.max(A[i][0], B[j][0]);
+            int tail = Math.min(A[i][1], B[j][1]);
+            if (head <= tail) {
+                res.add(head);
+                res.add(tail);
+            }
+            if (tailA <= tailB) i++;
+            else j++;
+        }
+        
+        int[][] ans = new int[res.size()/2][2];
+        for (int k = 0; k < ans.length; k++){
+            ans[k][0] = res.poll();
+            ans[k][1] = res.poll();
+        }
+        return ans;
+    }
+}
