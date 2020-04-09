@@ -1,0 +1,20 @@
+class Solution {
+    public int numberOfSubarrays(int[] nums, int k) {
+        int ans = 0;
+        List<Integer> recordOdd = new ArrayList<>();
+        recordOdd.add(-1);// this is for calculation convinience and consistence, because the start is special
+        for (int i = 0; i < nums.length; i++){
+            if (nums[i] % 2 == 1) recordOdd.add(i);
+        }
+        recordOdd.add(nums.length);// this is for calculation convinience and consistence, because the end is special
+        if (recordOdd.size() < k+2) return 0;
+        Integer[] odd = recordOdd.toArray(new Integer[recordOdd.size()]);
+        int head = 1, end = k;
+        while (end+1 < odd.length){
+            ans += (odd[head] - odd[head-1]) * (odd[end+1] - odd[end]);
+            head++;
+            end++;
+        }
+        return ans;
+    }
+}
