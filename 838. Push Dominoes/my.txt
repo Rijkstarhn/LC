@@ -1,0 +1,32 @@
+class Solution {
+    public String pushDominoes(String dominoes) {
+        char[] ans = ("L" + dominoes + "R").toCharArray();
+        int head = 0, tail = 1;
+        for (; tail < ans.length; tail++) {
+            if (ans[tail] == '.') continue;
+            // judge the cases
+            if (ans[head] == 'L' && ans[tail] == 'L') {
+                while (head < tail) ans[head++] = 'L';
+            }
+            if (ans[head] == 'L' && ans[tail] == 'R') {
+                head = tail;
+            }
+            if (ans[head] == 'R' && ans[tail] == 'R') {
+                while (head < tail) ans[head++] = 'R';
+            }
+            if (ans[head] == 'R' && ans[tail] == 'L') {
+                int nums = tail-head-1;
+                if ((nums & 1) == 1) {
+                    Arrays.fill(ans, head, head+nums/2+1, 'R');
+                    Arrays.fill(ans, head+nums/2+2, tail, 'L');
+                }
+                else {
+                    Arrays.fill(ans, head, head+nums/2+1, 'R');
+                    Arrays.fill(ans, head+nums/2+1, tail, 'L');
+                }
+                head = tail;
+            }
+        }
+        return new String(Arrays.copyOfRange(ans, 1, ans.length-1));
+    }
+}
