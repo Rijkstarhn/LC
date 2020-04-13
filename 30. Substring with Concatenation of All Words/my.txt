@@ -1,0 +1,52 @@
+class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+        List<Integer> ans = new ArrayList<>();
+        if (words.length == 0) return ans;
+        Map<String, Integer> dic = new HashMap<>();
+        for (String string : words){
+            if (dic.containsKey(string)) dic.put(string, dic.get(string)+1);
+            else dic.put(string, 1);
+        }
+        int wordLen = words[0].length();
+        int nums = words.length;
+        for (int j = 0; j < wordLen; j++){
+            Map<String, Integer> has = new HashMap<>();
+            int count = 0;
+            for (int i = j; i+nums*wordLen-1 < s.length(); i += wordLen){
+                boolean hasRemoved = false;
+                while (count < nums){
+                    String word = s.substring(i+count*wordLen,i+(count+1)*wordLen);
+                    if (dic.containsKey(word)) {
+                        has.put(word, has.getOrDefault(word,0)+1);
+                        if (has.get(word) > dic.get(word)) {
+                            int rest = 0;
+                            hasRemoved = true;
+                            while (has.get(word) > dic.get(word)){
+                                String restWord = s.substring(i+rest*wordLen, i+(rest+1)*wordLen);
+                                has.put(restWord, has.getOrDefault(restWord, 0)-1);
+                                rest++;
+                            }
+                            count = count - rest + 1;
+                            i = i + (rest-1) *wordLen;
+                            break;
+                        }
+                    }
+                    else {
+                        i = i + count*wordLen;
+                        count = 0;
+                        has.clear();
+                        break;
+                    }
+                    count++;
+                }
+                if (count == nums) ans.add(i);
+                if (count > 0 && !hasRemoved){
+                    String headWord = s.substring(i, i+wordLen);
+                    has.put(headWord, has.getOrDefault(headWord, 0)-1);
+                    count--;
+                }
+            }
+        }
+        return ans;
+    }
+}
