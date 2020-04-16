@@ -1,0 +1,24 @@
+class Solution {
+    public boolean checkValidString(String s) {
+        char[] input = s.toCharArray();
+        int count = 0;
+        Stack<Integer> stkLeft = new Stack<>();
+        Deque<Integer> qStar = new ArrayDeque<>();
+        for (int i = 0; i < input.length; i++){
+            char c = input[i];
+            if (c == '(') stkLeft.push(i);
+            if (c == '*') qStar.offerLast(i);
+            if (c == ')') {
+                if (!stkLeft.isEmpty()) stkLeft.pop();
+                else if (!qStar.isEmpty()) qStar.pollFirst();
+                else return false;
+            }
+        }
+        while (!stkLeft.isEmpty()) {
+            if (qStar.isEmpty()) return false;
+            if (stkLeft.pop() < qStar.pollLast()) continue;
+            else return false;
+        }
+        return true;
+    }
+}
