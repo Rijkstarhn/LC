@@ -1,0 +1,25 @@
+class Solution {
+    public boolean search(int[] nums, int target) {
+        if (0 == nums.length) return false;
+        int lo = 0, hi = nums.length-1;
+        while (lo <= hi){
+            int mid = lo+(hi-lo)/2;
+            if (nums[mid] == target) return true;
+            // left part is sorted
+            if (nums[mid] > nums[hi]){
+                if (target < nums[mid] && target >= nums[lo]) hi = mid-1;
+                else lo = mid+1;
+            }
+            // right part is sorted
+            else if (nums[mid] < nums[hi]) {
+                if (target <= nums[hi] && target > nums[mid]) lo = mid+1;
+                else hi = mid-1;
+            }
+            // cannot judge, just narrow one length of the nums, since nums[mid] != target , and nums[hi] == nums[mid], so hi--
+            else {
+                hi--;
+            }
+        }
+        return false;
+    }
+}
