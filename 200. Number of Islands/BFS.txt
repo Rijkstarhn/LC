@@ -1,0 +1,42 @@
+class Solution {
+    public int numIslands(char[][] grid) {
+        int ans = 0;
+        if (grid.length == 0) return ans;
+        int rowLength = grid.length, colLength = grid[0].length;
+        boolean[] marked = new boolean[rowLength*colLength];
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < rowLength; i++){
+            for (int j = 0; j < colLength; j++){
+                int pos = i*colLength+j;
+                if (grid[i][j] == '0' || marked[pos]) continue;
+                else {
+                    ans++;
+                    marked[pos] = true;
+                    q.offer(pos);
+                    while (!q.isEmpty()){
+                        pos = q.poll();
+                        int row = pos/colLength;
+                        int col = pos%colLength;
+                        if (row-1 >= 0 && !marked[(row-1)*colLength+col] && grid[row][col] == '1') {
+                            marked[(row-1)*colLength+col] = true;
+                            q.offer((row-1)*colLength+col);
+                        } 
+                        if (row+1 < rowLength && !marked[(row+1)*colLength+col] && grid[row][col] == '1') {
+                            marked[(row+1)*colLength+col] = true;
+                            q.offer((row+1)*colLength+col);
+                        } 
+                        if (col-1 >= 0 && !marked[(row)*colLength+col-1] && grid[row][col] == '1') {
+                            marked[(row)*colLength+col-1] = true;
+                            q.offer((row)*colLength+col-1);
+                        } 
+                        if (col+1 < colLength && !marked[(row)*colLength+col+1] && grid[row][col] == '1') {
+                            marked[(row)*colLength+col+1] = true;
+                            q.offer((row)*colLength+col+1);
+                        }
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+}
