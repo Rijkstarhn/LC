@@ -1,0 +1,25 @@
+class Solution {
+    public int minPathSum(int[][] grid) {
+        // init cache
+        int row = grid.length;
+        int col = grid[0].length;
+        int[][] cache = new int[row][col];
+        for (int[] r : cache) Arrays.fill(r, -1);
+        
+        // fill cache
+        cache[0][0] = grid[0][0];
+        dfs(row - 1, col - 1, grid, cache);
+		
+		// return result
+        return cache[row - 1][col - 1];
+    }
+    public int dfs(int m, int n, int[][] grid, int[][] cache){
+        // return grid[0][0]
+        if (m == 0 && n == 0) return grid[m][n];
+        if (m < 0 || n < 0) return Integer.MAX_VALUE; 
+		// recursively compute min value if it's not recorded in cache
+        if (cache[m][n] == -1) 
+            cache[m][n] = grid[m][n] + Math.min(dfs(m - 1, n, grid, cache), dfs(m, n - 1, grid, cache));
+        return cache[m][n];
+    }
+}
