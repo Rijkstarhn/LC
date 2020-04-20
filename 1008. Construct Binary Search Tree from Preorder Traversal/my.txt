@@ -1,0 +1,17 @@
+class Solution {
+    public TreeNode bstFromPreorder(int[] preorder) {
+        TreeNode root = new TreeNode(0);
+        return buildTree(root, preorder, 0, preorder.length-1);
+    }
+    
+    private TreeNode buildTree(TreeNode root, int[] preorder, int start, int end) {
+        if (start > end) return null;
+        root = new TreeNode(preorder[start]);
+        int div = start+1;
+        if (div > end) return root;
+        for (; div <= end && preorder[div] < preorder[start]; div++);
+        root.left = buildTree(root, preorder, start+1, div-1);
+        root.right = buildTree(root, preorder, div, end);
+        return root;
+    }
+}
