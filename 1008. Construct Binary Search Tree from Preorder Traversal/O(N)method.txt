@@ -1,6 +1,20 @@
 class Solution {
     int i = 0;
     public TreeNode bstFromPreorder(int[] preorder) {
+        return insert(preorder,  Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+    private TreeNode insert(int[] preorder, int lower, int upper) {
+        if (i > preorder.length-1 || preorder[i] > upper || preorder[i] < lower) return null;
+        TreeNode root = new TreeNode(preorder[i++]);
+        root.left = insert(preorder, lower, root.val);
+        root.right = insert(preorder, root.val, upper);
+        return root;
+    }
+}
+
+class Solution {
+    int i = 0;
+    public TreeNode bstFromPreorder(int[] preorder) {
         return insert(preorder, Integer.MAX_VALUE);
     }
     
