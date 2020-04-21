@@ -1,0 +1,39 @@
+class Solution {
+    List<Integer> ans = new ArrayList<>();
+    public List<Integer> countSmaller(int[] nums) {
+        int[] aux = new int[nums.length];
+        int[] res = new int[nums.length];
+        int[] index = new int[nums.length];
+        for (int i = 0; i < index.length; i++) {
+            index[i] = i;
+        }
+        sort(nums, aux, res, index, 0, nums.length-1);
+        for (int i : res) {
+            ans.add(i);
+        }
+        return ans;
+    }
+    private void sort(int[] nums, int[] aux, int[] res, int[] index, int lo, int hi) {
+        if (lo >= hi) return;
+        int mid = lo+(hi-lo)/2;
+        sort(nums, aux, res, index, lo, mid);
+        sort(nums, aux, res, index, mid+1, hi);
+        merge(nums, aux, res, index, lo, mid, hi);
+    }
+    private void merge(int[] nums, int[] aux, int[] res, int[] index, int lo, int mid, int hi) {
+        for (int i = lo; i <= hi; i++) {
+            aux[i] = index[i];
+        }
+        int i = lo, j = mid+1;
+        for (int k = lo; k <= hi; k++) {
+            if (i > mid) index[k] = aux[j++];
+            else if (j > hi) index[k] = aux[i++];
+            else if (nums[aux[i]] <= nums[aux[j]]) index[k] = aux[i++];
+            else {
+                index[k] = aux[j++];
+                int ptr = i;
+                while (ptr <= mid) res[aux[ptr++]]++;
+            }
+        }
+    }
+}
