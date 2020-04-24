@@ -1,0 +1,20 @@
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        int tail = nums.length-1;
+        for (int head = 0; head <= tail; ) {
+            if (nums[head] == val) {
+                if (nums[tail] != val) swap(nums, head, tail--);
+                else {
+                    while (tail >= 0 && nums[tail] == val) tail--;
+                }
+            }
+            else head++;
+        }
+        return tail+1;
+    }
+    private void swap(int[] nums, int head, int tail) {
+        int temp = nums[head];
+        nums[head] = nums[tail];
+        nums[tail] = temp;
+    }
+}
