@@ -1,0 +1,30 @@
+class Solution {
+    public void rotate(int[] nums, int k) {
+        if (nums.length == 0) return;
+        int[] copy = new int[nums.length];
+        k %= nums.length;
+        for (int i = 0; i < nums.length; i++) {
+            copy[(i+k)%nums.length] = nums[i];
+        }
+        for (int i = 0; i < nums.length; i++) {
+            nums[i] = copy[i];
+        }
+    }
+}
+
+// class Solution {
+//     public void rotate(int[] nums, int k) {
+//         if (nums.length == 0) return;
+//         int[] copy = new int[nums.length];
+//         int start = 0;
+//         for (int i = nums.length-k%nums.length; i < nums.length; i++) {
+//             copy[start++] = nums[i];
+//         }
+//         for (int i = 0; i < nums.length-k%nums.length; i++) {
+//             copy[start++] = nums[i];
+//         }
+//         for (int i = 0; i < nums.length; i++) {
+//             nums[i] = copy[i];
+//         }
+//     }
+// }
