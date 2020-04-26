@@ -1,0 +1,11 @@
+class Solution {
+    public List<Integer> getRow(int rowIndex) {
+        Long n=1L;
+        List<Integer> result = new ArrayList<>();
+        for(int i=0; i<=rowIndex; i++){
+            result.add(n.intValue()); 
+            n = ((rowIndex - i) * n) / (i+1);
+        }
+        return result;
+    }
+}
