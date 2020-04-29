@@ -1,0 +1,15 @@
+class Solution {
+    int ans = Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        maxPathSumSub(root);
+        return ans;
+    }
+    private int maxPathSumSub(TreeNode node) {
+        if (node == null) return 0;
+        int tmpLeft = Math.max(0, maxPathSumSub(node.left));
+        int tmpRight = Math.max(0, maxPathSumSub(node.right));
+        int tmp = node.val + tmpLeft + tmpRight;
+        ans = Math.max(ans, tmp);
+        return node.val + Math.max(tmpLeft, tmpRight);
+    }
+}
