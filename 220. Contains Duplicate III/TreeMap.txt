@@ -1,0 +1,15 @@
+class Solution {
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        if (k == 0) return false;
+        TreeSet<Integer> treeSet = new TreeSet<>();
+        int i = 0;
+        while (i < nums.length) {
+            if (treeSet.floor(nums[i]) != null && (long)nums[i] - (long)treeSet.floor(nums[i]) <= t) return true;
+            if (treeSet.ceiling(nums[i]) != null && (long)treeSet.ceiling(nums[i]) - (long)nums[i] <= t) return true;
+            treeSet.add(nums[i++]);
+            if (i > k) treeSet.remove(nums[i-k-1]);
+            
+        }
+        return false;
+    }
+}
