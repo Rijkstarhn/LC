@@ -1,0 +1,18 @@
+class Solution {
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        if (t < 0 || k < 0) return false;
+        Map<Long, Long> bucket = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            long index = getID(Long.valueOf(nums[i]), Long.valueOf(t+1));
+            if (bucket.containsKey((long)index)) return true;
+            if (bucket.containsKey((long)(index-1)) && nums[i] - bucket.get((long)(index-1)) <= t) return true;
+            if (bucket.containsKey((long)(index+1)) && bucket.get((long)(index+1)) - nums[i] <= t) return true;
+            bucket.put((long)index, (long)nums[i]);
+            if (i >= k) bucket.remove(getID(Long.valueOf(nums[i-k]), Long.valueOf(t+1)));
+        }
+        return false;
+    }
+    private long getID(long i, long w) {
+        return i < 0 ? (i + 1) / w - 1 : i / w;
+    }
+}
