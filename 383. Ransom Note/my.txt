@@ -1,0 +1,13 @@
+class Solution {
+    public boolean canConstruct(String ransomNote, String magazine) {
+        int[] dic = new int[26];
+        for (int i = 0; i < magazine.length(); i++) {
+            dic[magazine.charAt(i)-'a']++;
+        }
+        for (int i = 0; i < ransomNote.length(); i++) {
+            int tmp = --dic[ransomNote.charAt(i)-'a'];
+            if (tmp < 0) return false;
+        }
+        return true;
+    }
+}
