@@ -1,0 +1,17 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        if (prices.length < 2) return 0;
+        int k = 2;
+        int len = prices.length;
+        int[][] dp = new int[k+1][len];
+        int[] tmpMax = new int[k+1];
+        Arrays.fill(tmpMax, Integer.MIN_VALUE);
+        for (int i = 1; i < len; i++) {
+            for (int j = 1; j <= k; j++) {
+                tmpMax[j] = Math.max(tmpMax[j], dp[j-1][i-1] - prices[i-1]);
+                dp[j][i] = Math.max(dp[j][i-1], prices[i]+tmpMax[j]);
+            }
+        }
+        return dp[k][len-1];
+    }
+}
