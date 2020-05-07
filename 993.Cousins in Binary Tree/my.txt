@@ -1,0 +1,23 @@
+class Solution {
+    int k1 = -1, k2 = -1;
+    TreeNode parent1 = new TreeNode();
+    TreeNode parent2 = new TreeNode();
+    public boolean isCousins(TreeNode root, int x, int y) {
+        isCousin(root, x, y, 0, root);
+        if (k1 == k2 && parent1 != parent2) return true;
+        else return false;
+    }
+    private void isCousin(TreeNode root, int x, int y, int k, TreeNode parent) {
+        if (root == null) return;
+        if (root.val == x) {
+            k1 = k;
+            parent1 = parent;
+        }
+        if (root.val == y) {
+            k2 = k;
+            parent2 = parent;
+        }
+        isCousin(root.left, x, y, k+1, root);
+        isCousin(root.right, x, y, k+1, root);
+    }
+}
