@@ -1,0 +1,15 @@
+class Solution {
+    public int findJudge(int N, int[][] trust) {
+        int len = trust.length;
+        boolean[] trustOther = new boolean[N];
+        int[] votes = new int[N];
+        for (int i = 0; i < len; i++) {
+            trustOther[trust[i][0]-1] = true;
+            votes[trust[i][1]-1]++;
+        }
+        for (int i = 0; i < N; i++) {
+            if (trustOther[i] == false && votes[i] == N-1) return i+1;
+        }
+        return -1;
+    }
+}
