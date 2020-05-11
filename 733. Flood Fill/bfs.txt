@@ -1,0 +1,36 @@
+class Solution {
+    int rowLen = 0, colLen = 0;
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        if (image[sr][sc] == newColor) return image;
+        Queue<Integer> queue = new LinkedList<>();
+        rowLen = image.length;
+        colLen = image[0].length;
+        int oldColor = image[sr][sc];
+        image[sr][sc] = newColor;
+        enqueue(queue, image, sr, sc, oldColor);
+        while(!queue.isEmpty()) {
+            int row = queue.poll(), col = queue.poll();
+            image[row][col] = newColor;
+            enqueue(queue, image, row, col, oldColor);
+        }
+        return image;
+    }
+    private void enqueue(Queue queue, int[][] image, int row, int col, int oldColor) {
+        if (row-1 >= 0 && image[row-1][col] == oldColor) {
+            queue.offer(row-1);
+            queue.offer(col);
+        }
+        if (row+1 < rowLen && image[row+1][col] == oldColor) {
+            queue.offer(row+1);
+            queue.offer(col);
+        }
+        if (col-1 >= 0 && image[row][col-1] == oldColor) {
+            queue.offer(row);
+            queue.offer(col-1);
+        }
+        if (col+1 < colLen && image[row][col+1] == oldColor) {
+            queue.offer(row);
+            queue.offer(col+1);
+        }
+    }
+}
