@@ -1,0 +1,14 @@
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int head = 0, tail = 1;
+        while (tail < nums.length) {
+            if (nums[head] != nums[tail]) {
+                if (tail+1 < nums.length && nums[tail] == nums[tail+1]) return nums[head];
+                else if (head-1 >= 0 && nums[head-1] == nums[head]) return nums[tail];
+            }
+            head += 2;
+            tail += 2;
+        }
+        return nums[head];
+    }
+}
