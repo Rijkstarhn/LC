@@ -1,0 +1,55 @@
+class Trie {
+    Node root;
+    /** Initialize your data structure here. */
+    public Trie() {
+        root = null;
+    }
+    
+    /** Inserts a word into the trie. */
+    public void insert(String word) {
+        root = insert(root, word, 0);
+        
+    }
+    
+    private Node insert(Node root, String word, int index) {
+        if (root == null) root = new Node();
+        if (index == word.length()) {
+            root.isEnd = true;
+            return root;
+        }
+        root.next[word.charAt(index)-'a'] = insert(root.next[word.charAt(index)-'a'], word, index+1);
+        return root;
+    }
+    
+    /** Returns if the word is in the trie. */
+    public boolean search(String word) {
+        if (root == null) return false;
+        char[] wordCharForm = word.toCharArray();
+        Node tmp = root;
+        for (int i = 0; i < wordCharForm.length; i++) {
+            if (tmp.next[wordCharForm[i]-'a'] == null) return false;
+            else tmp = tmp.next[wordCharForm[i]-'a'];
+        }
+        return tmp.isEnd;
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    public boolean startsWith(String prefix) {
+        if (root == null) return false;
+        char[] prefixCharForm = prefix.toCharArray();
+        Node tmp = root;
+        for (int i = 0; i < prefixCharForm.length; i++) {
+            if (tmp.next[prefixCharForm[i]-'a'] == null) return false;
+            else tmp = tmp.next[prefixCharForm[i]-'a'];
+        }
+        return true;
+    }
+    
+    class Node {
+        boolean isEnd;
+        Node[] next;
+        public Node() {
+            next = new Node[26];
+        }
+    }
+}
