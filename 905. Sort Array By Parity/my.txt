@@ -1,0 +1,23 @@
+class Solution {
+    public int[] sortArrayByParity(int[] A) {
+        int tail = A.length - 1;
+        for (int head = 0; head < tail; head++) {
+            if (isEven(A[head])) {
+                continue;
+            }
+            while (!isEven(A[tail]) && tail > head) {
+                tail--;
+            }
+            swap(A, head, tail--);
+        }
+        return A;
+    }
+    private boolean isEven(int num) {
+        return num % 2 == 0;
+    }
+    private void swap(int[] nums, int head, int tail) {
+        int temp = nums[head];
+        nums[head] = nums[tail];
+        nums[tail] = temp;
+    }
+}
