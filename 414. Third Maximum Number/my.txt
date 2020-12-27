@@ -1,0 +1,24 @@
+class Solution {
+    public int thirdMax(int[] nums) {
+        int N = 3;
+        Set<Integer> threeMaximum = new HashSet<>();
+        int minMax = Integer.MAX_VALUE;
+        // get the minimum max of nums
+        for (int num : nums) {
+            minMax = num < minMax ? num : minMax;
+        }
+        for (int i = 0; i < N; i++) {
+            int max = minMax;
+            for (int j = 0; j < nums.length; j++) {
+                if (nums[j] > max && !threeMaximum.contains(nums[j])) {
+                    max = nums[j];
+                }
+            }
+            if (threeMaximum.size() < N && !threeMaximum.contains(max)) {
+                threeMaximum.add(max);
+            }
+            if (threeMaximum.size() == N) break;
+        }
+        return threeMaximum.size() == N? Collections.min(threeMaximum) : Collections.max(threeMaximum);
+    }
+}
