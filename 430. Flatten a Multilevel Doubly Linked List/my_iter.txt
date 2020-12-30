@@ -1,0 +1,41 @@
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node prev;
+    public Node next;
+    public Node child;
+};
+*/
+
+class Solution {
+    public Node flatten(Node head) {
+        if(head == null) { // edge case
+            return head;
+        }
+        Node cur = head; // cur is refering to the current visiting node
+        Stack<Node> stack = new Stack<>();
+        while(cur != null) {
+            if (cur.child != null) {
+                if (cur.next != null) { // null will be treated as an element for stack
+                    stack.push(cur.next); // push the node next to cur into stack for further connection
+                }
+                // modify the prev, next and child of cur and cur.child(which is tmp)
+                Node tmp = cur.child;
+                tmp.prev = cur;
+                cur.child = null;
+                cur.next = tmp;
+            }
+            // when cur reach the end of each row, check if stack is empty
+            // if it's empty, it means the cur reach the end of the entire list
+            while (cur.next == null && !stack.isEmpty()) {
+                Node tmp = stack.pop();
+                cur.next = tmp;
+                tmp.prev = cur;
+                cur = tmp;
+            }
+            cur = cur.next;
+        }
+        return head;
+    }
+}
