@@ -1,0 +1,48 @@
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node next;
+
+    public Node() {}
+    
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, Node _left, Node _right, Node _next) {
+        val = _val;
+        left = _left;
+        right = _right;
+        next = _next;
+    }
+};
+*/
+
+class Solution {
+    public Node connect(Node root) {
+        Node curRoot = root;
+        Node levelHead = new Node(0); 
+        Node cur = levelHead; 
+        while (curRoot != null) {
+            while (curRoot != null) {
+                if (curRoot.left != null) {
+                    cur.next = curRoot.left;
+                    cur = cur.next;
+                }
+                if (curRoot.right != null) {
+                    cur.next = curRoot.right;
+                    cur = cur.next;
+                }
+                curRoot = curRoot.next;
+            }
+            curRoot = levelHead.next;
+            levelHead.next = null; // by this line, if curRoot reaches the last level, the loop will finish
+            cur = levelHead;
+        }
+        return root;
+    }
+    
+}
