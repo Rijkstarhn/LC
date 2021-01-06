@@ -1,0 +1,36 @@
+class Solution {
+    
+    private int min = Integer.MAX_VALUE;
+    
+    public int numSquares(int n) {
+        int limit = (int) Math.sqrt(n);
+        int[] sqn = new int[limit];
+        boolean[] visited = new boolean[n + 1]; // for index correspondence, deprecate index 0
+        for (int i = 0; i < limit; i++) {
+            sqn[i] = (i + 1) * (i + 1);
+        }
+        Deque<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < limit; i++) {
+            queue.offer(0 + sqn[i]); // initial sum is 0
+        }
+        int step = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            step++;
+            for (int j = 0; j < size; j++) {
+                int tmp = queue.poll();
+                if (tmp > n || visited[tmp]) {
+                    continue;
+                }
+                else if (tmp == n) {
+                    return step;
+                }
+                visited[tmp] = true;
+                for (int num : sqn) {
+                    queue.offer(num + tmp);
+                }
+            }
+        }
+        return 0;
+    }
+}
