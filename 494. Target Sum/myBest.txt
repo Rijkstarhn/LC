@@ -1,0 +1,24 @@
+class Solution {
+    
+    private int count = 0;
+    
+    public int findTargetSumWays(int[] nums, int S) {
+        int level = 0;
+        dfs(0, level, nums, S);
+        return count;
+    }
+    
+    private void dfs(int sum, int level, int[] nums, int S) {
+        if (level == nums.length) {
+            if (sum == S) {
+                count++;
+            }
+            return;
+        }
+        int positiveSum = sum + nums[level];
+        int negativeSum = sum - nums[level];
+        level++;
+        dfs(positiveSum, level, nums, S);
+        dfs(negativeSum, level, nums, S);
+    }
+}
