@@ -1,0 +1,69 @@
+class MyStack {
+
+    private Queue<Integer> queueA;
+    private Queue<Integer> queueB;
+    private int top;
+
+    /**
+     * Initialize your data structure here.
+     */
+    public MyStack() {
+        queueA = new LinkedList<>();
+        queueB = new LinkedList<>();
+    }
+
+    /**
+     * Push element x onto stack.
+     */
+    public void push(int x) {
+        Queue<Integer> queue = queueA;
+        if (queueA.isEmpty()) queue = queueB;
+        top = x;
+        queue.offer(x);
+
+    }
+
+    /**
+     * Removes the element on top of the stack and returns that element.
+     */
+    public int pop() {
+        Queue<Integer> queue = queueA;
+        if (queueA.isEmpty()) {
+            queueA = queueB;
+            queueB = queue;
+        }
+        if (queueA.isEmpty()) return -1;
+        while (queueA.size() > 1) queueB.offer(queueA.poll());
+        return queueA.poll();
+
+    }
+
+    /**
+     * Get the top element.
+     */
+    public int top() {
+        return top;
+
+    }
+
+    /**
+     * Returns whether the stack is empty.
+     */
+    public boolean empty() {
+        return queueA.isEmpty() && queueB.isEmpty();
+    }
+}
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * MyStack obj = new MyStack();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.top();
+ * boolean param_4 = obj.empty();
+ */
+
+作者：linmingwei
+链接：https://leetcode-cn.com/problems/implement-stack-using-queues/solution/shuang-dui-lie-shi-xian-zhan-by-linmingwei/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
