@@ -1,0 +1,40 @@
+class Solution {
+    
+    private String ans = "";
+    
+    public String decodeString(String s) {
+        char[] sArray = s.toCharArray();
+        Stack<String> stack = new Stack<>();
+        String tmp = "";
+        for (int i = 0; i < sArray.length; i++) {
+            if (sArray[i] != '[' && sArray[i] != ']') {
+                tmp += sArray[i];
+            }
+            else if (sArray[i] == '[') {
+                stack.push(tmp);
+                tmp = "";
+            }
+            else if (sArray[i] == ']') {
+                tmp = processEncoding(tmp, stack.pop());
+            }
+        }
+        return tmp;
+    }
+    private String processEncoding(String tmp, String prev) {
+        char[] prevArray = prev.toCharArray();
+        int index = 0;
+        for (int i = 0; i < prevArray.length; i++) {
+            if (prevArray[i] < '0' || prevArray[i] > '9') {
+                continue;
+            }
+            index = i;
+            break;
+        }
+        int times = Integer.parseInt(prev.substring(index, prev.length())); // attention: substring's end index
+        tmp = tmp.repeat(times);
+        if (index > 0) {
+            tmp = prev.substring(0, index) + tmp;
+        }
+        return tmp;
+    }
+}
