@@ -1,0 +1,20 @@
+class Solution {
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        // Deque<Integer> queue = new LinkedList<>();
+        Set<Integer> keys = new HashSet<>();
+        // int cur = 0;
+        for (int i = 0; i < rooms.size() - 1; i++) {
+            for (int key : rooms.get(i)) {
+                keys.add(key);
+            }
+            boolean founded = false;
+            for (int key : keys) {
+                if (key == i + 1) {
+                    founded = true;
+                }
+            }
+            if (!founded) return false;
+        }
+        return true;
+    }
+}
