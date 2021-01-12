@@ -1,0 +1,13 @@
+class Solution {
+    public double myPow(double x, int n) {
+        double times = 1.0;
+        if (n == 0) return 1.0;
+        else if (n < 0) return myPowHelper((1.0 / x), times, 0, -n);
+        else return myPowHelper(x, times, 0, n);
+    }
+    private double myPowHelper(double x, double times, int count, int n) {
+        if (count == n) return times;
+        times = x * times;
+        return myPowHelper(x, times, count + 1, n);
+    }
+}
