@@ -1,0 +1,32 @@
+class Solution {
+    public int[] sortArray(int[] nums) {
+        if (nums.length <= 1) {
+            return nums;
+        }
+        int mid = nums.length / 2;
+        int[] left_half = sortArray(Arrays.copyOfRange(nums, 0, mid));
+        int[] right_half = sortArray(Arrays.copyOfRange(nums, mid, nums.length));
+        return merge(left_half, right_half);
+    }
+    private int[] merge(int[] left_half, int[] right_half) {
+        int left_cur = 0;
+        int right_cur = 0;
+        int[] merged_array = new int[left_half.length + right_half.length];
+        int merged_cur = 0;
+        while (left_cur < left_half.length && right_cur < right_half.length) {
+            if (left_half[left_cur] <= right_half[right_cur]) {
+                merged_array[merged_cur++] = left_half[left_cur++];
+            }
+            else {
+                merged_array[merged_cur++] = right_half[right_cur++];
+            }
+        }
+        while (left_cur < left_half.length) {
+            merged_array[merged_cur++] = left_half[left_cur++];
+        }
+        while (right_cur < right_half.length) {
+            merged_array[merged_cur++] = right_half[right_cur++];
+        }
+        return merged_array;
+    }
+}
