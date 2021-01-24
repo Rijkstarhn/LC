@@ -1,0 +1,40 @@
+class Solution {
+    
+    private int count = 0;
+    private int[] exists;
+
+    public int totalNQueens(int n) {
+        exists = new int[n];
+        Arrays.fill(exists, -1);
+        findSolutions(0, n);
+        return count;
+    }
+
+    private void findSolutions(int row, int size) {
+        if (row == size) {
+            count++;
+            return;
+        }
+        // put the queen in this row
+        for (int i = 0; i < size; i++) {
+            if (isLegal(row, i)) {
+                exists[row] = i;
+                findSolutions(row+1, size);
+            }
+        }
+        if (row > 0) exists[row-1] = -1;
+    }
+
+    private boolean isLegal(int row, int col) {
+        int org_col = col;
+        int left_col = col - 1;
+        int right_col = col + 1;
+        for (int i = row - 1; i >= 0; i--) {
+            if (exists[i] == org_col) return false;
+            if (left_col >= 0 && exists[i] == left_col || exists[i] == right_col) return false;
+            left_col--;
+            right_col++;
+        }
+        return true;
+    }
+}
