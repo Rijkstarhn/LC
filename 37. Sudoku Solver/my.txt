@@ -1,0 +1,45 @@
+class Solution {
+    private static final int size = 9;
+
+    public void solveSudoku(char[][] board) {
+        solve(board, 0);
+    }
+
+    private boolean solve(char[][] board, int pos) {
+        if (pos == size * size) return true; // solution found
+        int row = pos / size;
+        int col = pos % size;
+        // use pos instead of row and col because pos + 1 is more convenient
+        if (board[row][col] != '.') {
+            return solve(board, pos+1);
+        }
+        else {
+            for (char c = '1'; c <= '9'; c++) {
+                if (isValid(board, c, row, col)) {
+                    board[row][col] = c;
+                    if (solve(board, pos+1)) return true;
+                }
+            }
+            board[row][col] = '.';
+            return false;
+        }
+    }
+
+    private boolean isValid(char[][] board, char num, int row, int col) {
+        for (int i = 0; i < size; i++) {
+            if (board[i][col] == num) return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if (board[row][i] == num) return false;
+        }
+        int subSize = (int) Math.sqrt(size * 1.0);
+        int subRow = row / subSize * subSize;
+        int subCol = col / subSize * subSize;
+        for (int i = subRow; i < subRow + 3; i++) {
+            for (int j = subCol; j < subCol + 3; j++) {
+                if (board[i][j] == num) return false;
+            }
+        }
+        return true;
+    }
+}

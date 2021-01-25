@@ -1,0 +1,40 @@
+class Solution {
+    
+    private static final int size = 9;
+    
+    public void solveSudoku(char[][] board) {
+        solve(board, 0);
+    }
+    
+    private boolean solve(char[][] board, int pos) {
+        if (pos == size * size) return true; // solution found
+        int row = pos / size;
+        int col = pos % size;
+        // use pos instead of row and col because pos + 1 is more convenient
+        if (board[row][col] != '.') {
+            return solve(board, pos+1);
+        }
+        boolean[] isOccupied = new boolean[size + 1]; // for reference convenience in isValid()
+        Arrays.fill(isOccupied, true);
+        isValid(isOccupied, board, row, col);
+        for (char c = '1'; c <= '9'; c++) {
+            if (isOccupied[c - '0']) {
+                board[row][col] = c;
+                if (solve(board, pos+1)) return true; // need to return true when solve() returns true
+            }
+        }
+        board[row][col] = '.';
+        return false;
+    }
+    
+    private void isValid(boolean[] isOccupied, char[][] board, int row, int col) {
+        for (int i = 0; i < size; i++) {
+            if (board[i][col] != '.') isOccupied[board[i][col] - '0'] = false;
+            if (board[row][i] != '.') isOccupied[board[row][i] - '0'] = false;
+            int subSize = (int) Math.sqrt(size * 1.0);
+            int subRow = row / subSize * subSize + i / subSize;
+            int subCol = col / subSize * subSize + i % subSize;
+            if (board[subRow][subCol] != '.') isOccupied[board[subRow][subCol] - '0'] = false;
+        }
+    }
+}
